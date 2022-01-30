@@ -14,13 +14,15 @@ config = context.config
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
+assert config.config_file_name is not None
 fileConfig(config.config_file_name)
 
 # add your model's MetaData object here
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = sqlamodels.Base.metadata
+# target_metadata = sqlamodels.Base.metadata
+target_metadata = sqlamodels.mapper_registry.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

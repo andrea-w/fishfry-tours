@@ -3,7 +3,7 @@ import typing
 
 
 class Config:
-    DB_URI: str = "postgresql+asyncpg://localhost/fishfry"
+    DB_URI: str = "postgresql+asyncpg://pgadmin:password@localhost/testdb"
 
     def __init__(self, prefix: str = "FISHFRY_"):
         for name, type_ in typing.get_type_hints(self).items():
