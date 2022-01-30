@@ -7,12 +7,10 @@ from hypercorn.config import Config
 from quart import Quart
 from strawberry import Schema
 
-from fishfry import base
-from fishfry.schema import Query
+from fishfry.schema import Query, schema
 from fishfry.strawview import GraphQLView
 
 app = Quart("fishfry")
-app.config.from_object(base.config)
 
 app.add_url_rule("/graphql", view_func=GraphQLView.as_view("graphql_view", schema=schema))
 

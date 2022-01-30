@@ -1,0 +1,36 @@
+{
+    "boats": [
+        {
+            "name": "Boaty McBoatFace",
+            "status": "DOCKED"
+        },
+        {
+            "name": "Ships n' Giggles",
+            "status": "MAINTENANCE"
+        },
+        {
+            "name": "Moor Often Than Knot",
+            "status": "OUTBOUND_TO_SEA"
+        },
+        {
+            "name": "Seas The Day",
+            "status": "INBOUND_TO_HARBOUR"
+        },
+        {
+            "name": "Knight of the Caribbean",
+            "status": "DOCKED"
+        },
+        {
+            "name": "Usain Boat",
+            "status": "MAINTENANCE"
+        },
+        {
+            "name": "The Codfather",
+            "status": "OUTBOUND_TO_SEA"
+        },
+        {
+            "name": "Pier Pressure",
+            "status": "INBOUND_TO_HARBOUR"
+        }
+    ]
+}
