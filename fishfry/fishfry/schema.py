@@ -54,6 +54,17 @@ class BoatOps:
             boat.status = status
         return boat
 
+    @strawberry.mutation
+    async def delete_boat(self, id: int) -> bool:
+        async with sqlamodels.atomic_session() as session:
+            item = (await session.execute(select(sqlamodels.Boat).where(sqlamodels.Boat.id == id))).scalars().first()
+            boat = typing.cast(typing.Optional[sqlamodels.Boat], item)
+
+            if boat is None:
+                return False
+            await session.delete(boat)
+        return True
+
 @strawberry.type
 class Mutation:
     boats: BoatOps
