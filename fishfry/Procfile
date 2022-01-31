@@ -1,1 +1,1 @@
-web: gunicorn webapp:app
+web: hypercorn fishfry.webapp:app
