@@ -17,7 +17,7 @@ config = context.config
 # This line sets up loggers basically.
 assert config.config_file_name is not None
 ini_section = config.config_ini_section
-config.set_section_option(ini_section, "DATABASE_URL", os.environ.get('DATABASE_URL'))
+config.set_section_option(ini_section, "DATABASE_URL", os.environ.get('DATABASE_URL').replace("://", "ql://", 1))
 fileConfig(config.config_file_name)
 
 # add your model's MetaData object here
