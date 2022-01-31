@@ -5,6 +5,7 @@ from hypercorn.config import Config as HypercornConfig
 from quart import Quart
 
 from fishfry import base
+import os
 from fishfry.schema import schema
 from fishfry.strawview import GraphQLView
 
@@ -20,7 +21,7 @@ async def index():
 
 def hypercorn_serve():
     hypercorn_config = HypercornConfig()
-    hypercorn_config.bind = ["0.0.0.0:5000"]    
+    hypercorn_config.bind = ["0.0.0.0:{}".format(os.environ.get('PORT'))]    
     hypercorn_config.use_reloader = True
     asyncio.run(serve(app, hypercorn_config, shutdown_trigger=lambda: asyncio.Future()))
 
