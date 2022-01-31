@@ -1,4 +1,5 @@
 import asyncio
+import os
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
@@ -15,6 +16,8 @@ config = context.config
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
 assert config.config_file_name is not None
+ini_section = config.config_ini_section
+config.set_section_option(ini_section, "DATABASE_URL", os.environ.get('DATABASE_URL'))
 fileConfig(config.config_file_name)
 
 # add your model's MetaData object here
