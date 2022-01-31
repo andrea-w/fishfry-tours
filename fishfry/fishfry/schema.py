@@ -37,7 +37,7 @@ class Query:
 class BoatOps:
     @strawberry.mutation
     async def add_boat(self, name: str) -> sqlamodels.Boat:
-        boat = sqlamodels.Boat(name=name, status=StatusEnum.DOCKED)
+        boat = sqlamodels.Boat(name=name, status=StatusEnum.DOCKED.value)
         async with sqlamodels.atomic_session() as session:
             session.add(boat)
         return boat
@@ -51,7 +51,7 @@ class BoatOps:
             if boat is None:
                 return None
 
-            boat.status = status
+            boat.status = status.value
         return boat
 
     @strawberry.mutation

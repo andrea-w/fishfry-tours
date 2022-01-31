@@ -28,15 +28,9 @@ async def atomic_session() -> typing.AsyncIterator[AsyncSession]:
             await session.rollback()
             raise
 
-# class Boat(Base):
 @mapper_registry.mapped
 @dataclasses.dataclass
 class Boat:
-    # __tablename__ = 'boat'
-
-    # id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
-    # name = Column(String, nullable=False)
-    # status = Column(String, nullable=False)
     __table__ = Table('boat', mapper_registry.metadata,
         Column("id", Integer, primary_key=True, autoincrement=True, nullable=False),
         Column("name", String, nullable=False, unique=True),
