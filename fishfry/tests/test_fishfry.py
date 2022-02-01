@@ -1,4 +1,3 @@
-import logging
 from fishfry import __version__, webapp, schema
 import pytest
 import pytest_asyncio
