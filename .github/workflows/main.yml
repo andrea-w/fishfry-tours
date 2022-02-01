@@ -30,7 +30,7 @@ jobs:
           pip install .
 
       - name: Run
-        run: python -m fishfry.webapp
+        run: python -m fishfry.fishfry.webapp
 
   test:
     needs: build
