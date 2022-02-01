@@ -4,7 +4,7 @@ from hypercorn.asyncio import serve
 from hypercorn.config import Config as HypercornConfig
 from quart import Quart
 
-from fishfry.fishfry import base
+from fishfry import base
 import os
 from fishfry.schema import schema
 from fishfry.strawview import GraphQLView
