@@ -1,7 +1,6 @@
 import os
 import typing
 
-
 class Config:
     # DB_URI: str = "postgresql+asyncpg://pgadmin:password@localhost/testdb"
     DB_URI: str = os.environ.get('DATABASE_URL').replace("://", "ql+asyncpg://", 1)

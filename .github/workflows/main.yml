@@ -30,7 +30,8 @@ jobs:
           pip install .
 
       - name: Run Python unit tests
-        run: python -m pytest --import-mode=append fishfry/tests/
+        # run: python -m pytest --import-mode=append fishfry/tests/
+        run: python -m pytest fishfry/tests/
 
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
