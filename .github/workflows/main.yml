@@ -30,8 +30,6 @@ jobs:
           pip install .
 
       - name: Run
-        with:
-          python-version: ${{ matrix.python-version }}
         run: python -m fishfry.webapp
 
   test:
