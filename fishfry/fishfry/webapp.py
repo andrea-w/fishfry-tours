@@ -3,6 +3,7 @@ import asyncio
 from hypercorn.asyncio import serve
 from hypercorn.config import Config as HypercornConfig
 from quart import Quart
+from quart_cors import cors
 
 from fishfry import base
 import os
@@ -10,6 +11,7 @@ from fishfry.schema import schema
 from fishfry.strawview import GraphQLView
 
 app = Quart("fishfry")
+app = cors(app, allow_origin="*")
 app.config.from_object(base.config)
 
 app.add_url_rule("/graphql", view_func=GraphQLView.as_view("graphql_view", schema=schema))
