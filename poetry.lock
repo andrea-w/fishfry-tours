@@ -446,6 +446,17 @@ werkzeug = ">=2.0.0"
 dotenv = ["python-dotenv"]
 
 [[package]]
+name = "quart-cors"
+version = "0.5.0"
+description = "A Quart extension to provide Cross Origin Resource Sharing, access control, support."
+category = "main"
+optional = false
+python-versions = ">=3.7.0"
+
+[package.dependencies]
+Quart = ">=0.15"
+
+[[package]]
 name = "sentinel"
 version = "0.3.0"
 description = "Create sentinel objects, akin to None, NotImplemented, Ellipsis"
@@ -630,7 +641,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "86bbcf2b92fb59fb25f51c4e2bc9b3cde7ba25bf25f4870b1d4b4ca5f4fd2ff3"
+content-hash = "83ef597d3faa47a0f694d7f044fc81f9c9539eb7e5d6c1abc3f99b679447e576"
 
 [metadata.files]
 aiofiles = [
@@ -984,6 +995,10 @@ python-multipart = [
 quart = [
     {file = "Quart-0.16.2-py3-none-any.whl", hash = "sha256:c1bcc4989c7e0b6c3301df10b6285c09ee0a1d75fa4cebd936f0d17312294e36"},
     {file = "Quart-0.16.2.tar.gz", hash = "sha256:356f4fd795fbf5a7a97bdeb7ca908b5051d0e6e4c0499b2b7c30b743a6938a7e"},
+]
+quart-cors = [
+    {file = "Quart-CORS-0.5.0.tar.gz", hash = "sha256:ea08d26aef918d59194fbf065cde9b6cae90dc5f21120dcd254d7d46190cd293"},
+    {file = "Quart_CORS-0.5.0-py3-none-any.whl", hash = "sha256:c2be932f20413a56b176527090229afe8f725a3ee029d45ea08a174cdc319823"},
 ]
 sentinel = [
     {file = "sentinel-0.3.0-py3-none-any.whl", hash = "sha256:bd8710dd26752039c668604f6be2aaf741b56f7811c5924a4dcdfd74359244f3"},

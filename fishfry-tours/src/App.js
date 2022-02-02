@@ -2,66 +2,138 @@ import './App.css';
 import PageHeader from './PageHeader';
 import PageFooter from './PageFooter';
 import Dropzone from './Dropzone';
-import { useCallback, useState } from 'react';
+import React from 'react';
 import BoatCardList from './BoatCardList';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 import { Grid } from '@material-ui/core';
+import { API_BASE_URL } from './env';
 
+const axios = require('axios').default
 
-function App() {
-  const [boats, setBoats] = useState([])
+class App extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      boats: []
+    }
+    this.axios_instance = axios.create({
+      baseURL: API_BASE_URL,
+      config: {
+        headers: {
+          post: {
+          "Access-Control-Allow-Origin": "*"
+          }
+        }
+      }
+    })
+  }
 
-  const onDrop = useCallback(acceptedFiles => {
+  componentDidMount() {
+    this.getBoats()
+  }
+
+  getBoats() {
+    const queryString = `query { boats { id name status }}`
+    this.axios_instance.post('/graphql', {query: queryString}).then((response) => {
+      this.setState( {
+        boats: response.data.data.boats
+      })
+    })
+  }
+
+  addBoat(boatName) {
+    const mutationString = `mutation { boats { addBoat(name: "${boatName}") {id name status } }}`
+    this.axios_instance.post('graphql', {query: mutationString}).then((response) => {
+      console.log(response)
+    })
+  }
+  
+  deleteBoat(boatId) {
+    const mutationString = `mutation { boats { deleteBoat(id: ${boatId}) }}`
+    this.axios_instance.post('', {query: mutationString}).then(function(response) {
+      console.log(response)
+    })
+  }
+
+  updateBoatStatus(boatId, newStatus) {
+    const mutationString = `mutation { boats { updateBoatStatus(id: ${boatId}, status: ${newStatus}) { id name status }}}`
+    this.axios_instance.post('', {query: mutationString}).then(function(response) {
+      console.log(response)
+    })
+  }
+
+  onDrop = (acceptedFiles) => {
     console.log(acceptedFiles)
-  }, [])
+  }
 
-  const grid = 8
+  reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list)
+    const [removed] = result.splice(startIndex, 1)
+    result.splice(endIndex, 0, removed)
 
-  const getItemStyle = (isDragging, draggableStyle) => ({
+    return result
+  }
+
+  onDragEnd = (result) => {
+    // if dropped outside list
+    if (!result.destination) {
+      return;
+    }
+    const items = this.reorder(this.state.boats, result.source.index, result.destination.index)
+
+    this.setState({boats: items})
+  }
+
+  grid = 8
+
+  getItemStyle = (isDragging, draggableStyle) => ({
     userSelect: "none",
-    padding: grid * 2,
-    margin: `0 0 ${grid}px 0`,
+    padding: this.grid * 2,
+    margin: `0 0 ${this.grid}px 0`,
 
     background: isDragging ? "lightgreen" : "grey",
     ...draggableStyle
   })
 
-  const getListStyle = isDraggingOver => ({
+  getListStyle = isDraggingOver => ({
     background: isDraggingOver ? "lightblue" : "lightgrey",
     padding: Grid,
     width: 250
   })
 
-  return (
-    <div className="App">
-      <PageHeader />
-      <h1 className='text-center'>Drag and Drop example</h1>
-      <Dropzone onDrop={onDrop} />
-      <DragDropContext onDragEnd={}>
-        <Droppable droppableId='droppable'>
-          {(provided, snapshot) => (
-            <div {...provided.droppableProps} ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)} >
-              {this.state.items.map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index} >
-                  {(provided, snapshot) => (
-                    <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}
-                    style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
-                    >
-                      {item.content}
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-
-        </Droppable>
-      </DragDropContext>
-      <BoatCardList boatCards={boats} />
-      <PageFooter />
-    </div>
-  );
+  render() {
+    return (
+      <div className="App">
+        <PageHeader />
+        <h1 className='text-center'>Drag and Drop example</h1>
+        <Dropzone onDrop={this.onDrop} />
+        {/* <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId='droppable'>
+            {(provided, snapshot) => (
+              <div {...provided.droppableProps} ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)} >
+                {this.state.items.map((item, index) => (
+                  <Draggable key={item.id} draggableId={item.id} index={index} >
+                    {(provided, snapshot) => (
+                      <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}
+                      style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
+                      >
+                        {item.content}
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+  
+          </Droppable>
+        </DragDropContext> */}
+        <BoatCardList boatCards={this.state.boats} />
+        <PageFooter />
+      </div>
+    );
+  }
+  
 }
 
-export default App;
+export default App
