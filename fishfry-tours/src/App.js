@@ -5,7 +5,7 @@ import Dropzone from './Dropzone';
 import React from 'react';
 import BoatCardList from './BoatCardList';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
-import { Grid } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import { API_BASE_URL } from './env';
 
 const axios = require('axios').default
@@ -128,6 +128,9 @@ class App extends React.Component {
   
           </Droppable>
         </DragDropContext> */}
+        <Button>
+          Add Boat
+        </Button>
         <BoatCardList boatCards={this.state.boats} />
         <PageFooter />
       </div>

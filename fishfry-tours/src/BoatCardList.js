@@ -1,11 +1,15 @@
 import React from "react";
-import { Card, Paper, Typography } from "@material-ui/core";
+import { Button, Card, Paper, Typography } from "@material-ui/core";
+import ClearIcon from '@mui/icons-material/Clear';
 
 const BoatCard = ({ boatCard }) => {
     return (
         <div className="boat-card-item">
             <Card variant="outlined">
                 {boatCard.name} {boatCard.status}
+                <Button>
+                    <ClearIcon />
+                </Button>
             </Card>
         </div>
     )
