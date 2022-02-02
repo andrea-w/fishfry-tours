@@ -5,7 +5,7 @@ import Dropzone from './Dropzone';
 import React from 'react';
 import BoatCardList from './BoatCardList';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
-import { Button, Grid } from '@material-ui/core';
+import { Button, Grid, TextField } from '@material-ui/core';
 import { API_BASE_URL } from './env';
 
 const axios = require('axios').default
@@ -14,7 +14,8 @@ class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      boats: []
+      boats: [],
+      newBoatName: ''
     }
     this.axios_instance = axios.create({
       baseURL: API_BASE_URL,
@@ -42,22 +43,32 @@ class App extends React.Component {
   }
 
   addBoat(boatName) {
-    const mutationString = `mutation { boats { addBoat(name: "${boatName}") {id name status } }}`
-    this.axios_instance.post('graphql', {query: mutationString}).then((response) => {
-      console.log(response)
-    })
+    if(boatName.length > 0) {
+      const mutationString = `mutation { boats { addBoat(name: "${boatName}") {id name status } }}`
+      this.axios_instance.post('graphql', {query: mutationString}).then((response) => {
+        if (response.status === 200) {
+          this.getBoats()
+          this.setState({
+            newBoatName: ''
+          })
+        }
+      })
+    }
   }
   
-  deleteBoat(boatId) {
+  deleteBoat = (boatId) => {
     const mutationString = `mutation { boats { deleteBoat(id: ${boatId}) }}`
-    this.axios_instance.post('', {query: mutationString}).then(function(response) {
+    this.axios_instance.post('graphql', {query: mutationString}).then((response) => {
       console.log(response)
+      if (response.status === 200 && response.data.data.boats.deleteBoat === true) {
+        this.getBoats()
+      }
     })
   }
 
   updateBoatStatus(boatId, newStatus) {
     const mutationString = `mutation { boats { updateBoatStatus(id: ${boatId}, status: ${newStatus}) { id name status }}}`
-    this.axios_instance.post('', {query: mutationString}).then(function(response) {
+    this.axios_instance.post('graphql', {query: mutationString}).then(function(response) {
       console.log(response)
     })
   }
@@ -101,6 +112,8 @@ class App extends React.Component {
     width: 250
   })
 
+
+
   render() {
     return (
       <div className="App">
@@ -128,10 +141,13 @@ class App extends React.Component {
   
           </Droppable>
         </DragDropContext> */}
-        <Button variant="contained">
+        <TextField variant="outlined" label="Boat Name" size="small" onChange={(e) => {
+          this.setState({newBoatName: e.target.value})
+        }} />
+        <Button variant="contained" onClick={() => {this.addBoat(this.state.newBoatName)}}>
           Add Boat
         </Button>
-        <BoatCardList boatCards={this.state.boats} />
+        <BoatCardList boatCards={this.state.boats} deleteBoat={this.deleteBoat} />
         <PageFooter />
       </div>
     );

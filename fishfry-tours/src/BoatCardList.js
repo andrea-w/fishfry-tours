@@ -2,8 +2,9 @@ import React from "react";
 import { Card, CardActions, CardContent, Paper, Typography } from "@material-ui/core";
 import ClearIcon from '@mui/icons-material/Clear';
 import { IconButton } from "@mui/material";
+import deleteBoat from './App'
 
-const BoatCard = ({ boatCard }) => {
+const BoatCard = ({ boatCard, deleteBoat }) => {
     return (
         <div className="boat-card-item">
             <Card variant="outlined">
@@ -16,7 +17,7 @@ const BoatCard = ({ boatCard }) => {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                <IconButton>
+                <IconButton onClick={() => deleteBoat(boatCard.id)}>
                     <ClearIcon />
                 </IconButton>
                 </CardActions>
@@ -25,10 +26,10 @@ const BoatCard = ({ boatCard }) => {
     )
 }
 
-const BoatCardList = ({ boatCards }) => {
+const BoatCardList = ({ boatCards, deleteBoat }) => {
     const renderCard = (boatCard, index) => {
         return (
-            <BoatCard boatCard={boatCard} key={index} />
+            <BoatCard boatCard={boatCard} deleteBoat={deleteBoat} key={index} />
         )
     }
 
