@@ -1,6 +1,10 @@
 # fishfry-tours
 Technical assessment for IS27 competition with CITZ
 
+The frontend can be accessed at https://fishfry-web.herokuapp.com/, and the backend at https://fishfry-tours.herokuapp.com/
+
+There is also a GraphQL endpoint for the app, found at https://fishfry-tours.herokuapp.com/graphql
+
 ## Backend
 
 The backend is written in Python with a PostgreSQL database. I chose PostgreSQL because, with the PostGIS extension, it could allow for advanced location-based queries, if the app were to be expanded upon so that the boats' geographic coordinates could be monitored while they were out at sea. (But that is beyond the scope of this assignment.)
@@ -12,6 +16,8 @@ I chose Python for the backend language because it's great and I love it.
 ## DevOps Pipeline
 
 Since my source code is hosted in GitHub, I chose to use GitHub Actions and integrated with Heroku as my chosen cloud host. This decision was based mostly on the cost (free!).
+
+Unfortunately, during development I encountered problems while trying to get environment variables from Heroku to load into my apps (on both the front-end and backend). I'm not fully sure what caused this, although the Heroku Status site (https://status.heroku.com/) was reporting problems while I was working. As a last resort, I had to hard-code values for the database and API URLS into my codebase - it's certainly not an ideal solution, but it was the only way I could get it to work by the submission deadline.
 
 ## QA
 
