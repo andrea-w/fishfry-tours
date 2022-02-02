@@ -1,35 +1,130 @@
 import React from "react";
 import { Card, CardActions, CardContent, Paper, Typography } from "@material-ui/core";
 import ClearIcon from '@mui/icons-material/Clear';
-import { IconButton } from "@mui/material";
-import deleteBoat from './App'
+import { Button, IconButton } from "@mui/material";
 
-const BoatCard = ({ boatCard, deleteBoat }) => {
+const MaintenanceCard = ( boatCard, index, deleteBoat, updateBoat ) => {
     return (
-        <div className="boat-card-item">
+        <div className={`maintenance-boat-card-${index}`}>
             <Card variant="outlined">
                 <CardContent>
                     <Typography variant="h5">
                         {boatCard.name}
                     </Typography>
-                    <Typography color="textSecondary">
-                        {boatCard.status}
-                    </Typography>
                 </CardContent>
                 <CardActions>
-                <IconButton onClick={() => deleteBoat(boatCard.id)}>
-                    <ClearIcon />
-                </IconButton>
+                    <IconButton onClick={() => deleteBoat(boatCard.id)}>
+                        <ClearIcon />
+                    </IconButton>
+                    <Button onClick={() => updateBoat(boatCard.id, 'DOCKED')}>
+                        Docked
+                    </Button>
+                    <Button onClick={() => updateBoat(boatCard.id, 'OUTBOUND_TO_SEA')}>
+                        Outbound to Sea
+                    </Button>
+                    <Button onClick={() => updateBoat(boatCard.id, 'INBOUND_TO_HARBOUR')}>
+                        Inbound to Harbour
+                    </Button>
                 </CardActions>
             </Card>
         </div>
     )
 }
 
-const BoatCardList = ({ boatCards, deleteBoat }) => {
+const OutboundCard = ( boatCard, index, deleteBoat, updateBoat ) => {
+    return (
+        <div className={`outbound-boat-card-${index}`}>
+            <Card variant="outlined">
+                <CardContent>
+                    <Typography variant="h5">
+                        {boatCard.name}
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <IconButton onClick={() => deleteBoat(boatCard.id)}>
+                        <ClearIcon />
+                    </IconButton>
+                    <Button onClick={() => updateBoat(boatCard.id, 'MAINTENANCE')}>
+                        Maintenance
+                    </Button>
+                    <Button onClick={() => updateBoat(boatCard.id, 'INBOUND_TO_HARBOUR')}>
+                        Inbound to Harbour
+                    </Button>
+                </CardActions>
+            </Card>
+        </div>
+    )
+}
+
+const InboundCard = ( boatCard, index, deleteBoat, updateBoat ) => {
+    return (
+        <div className={`inbound-boat-card-${index}`}>
+            <Card variant="outlined">
+                <CardContent>
+                    <Typography variant="h5">
+                        {boatCard.name}
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <IconButton onClick={() => deleteBoat(boatCard.id)}>
+                        <ClearIcon />
+                    </IconButton>
+                    <Button onClick={() => updateBoat(boatCard.id, 'DOCKED')}>
+                        Docked
+                    </Button>
+                    <Button onClick={() => updateBoat(boatCard.id, 'MAINTENANCE')}>
+                        Maintenance
+                    </Button>
+                </CardActions>
+            </Card>
+        </div>
+    )
+}
+
+const DockedCard = ( boatCard, index, deleteBoat, updateBoat ) => {
+    return (
+        <div className={`docked-boat-card-${index}`}>
+            <Card variant="outlined">
+                <CardContent>
+                    <Typography variant="h5">
+                        {boatCard.name}
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <IconButton onClick={() => deleteBoat(boatCard.id)}>
+                        <ClearIcon />
+                    </IconButton>
+                    <Button onClick={() => updateBoat(boatCard.id, 'MAINTENANCE')}>
+                        Maintenance
+                    </Button>
+                    <Button onClick={() => updateBoat(boatCard.id, 'OUTBOUND_TO_SEA')}>
+                        Outbound to Sea
+                    </Button>
+                </CardActions>
+            </Card>
+        </div>
+    )
+}
+
+const BoatCard = ({ boatCard, deleteBoat, updateBoat, key }) => {
+    if (boatCard.status.toLowerCase().replace(/_/g, " ") === 'docked') {
+        return DockedCard(boatCard, key, deleteBoat, updateBoat)
+    }
+    if (boatCard.status.toLowerCase().replace(/_/g, " ") === 'maintenance') {
+        return MaintenanceCard(boatCard, key, deleteBoat, updateBoat)
+    }
+    if (boatCard.status.toLowerCase().replace(/_/g, " ") === 'outbound to sea') {
+        return OutboundCard(boatCard, key, deleteBoat, updateBoat)
+    }
+    if (boatCard.status.toLowerCase().replace(/_/g, " ") === 'inbound to harbour') {
+        return InboundCard(boatCard, key, deleteBoat, updateBoat)
+    }
+}
+
+const BoatCardList = ({ boatCards, deleteBoat, updateBoat }) => {
     const renderCard = (boatCard, index) => {
         return (
-            <BoatCard boatCard={boatCard} deleteBoat={deleteBoat} key={index} />
+            <BoatCard boatCard={boatCard} deleteBoat={deleteBoat} updateBoat={updateBoat} key={index} />
         )
     }
 

@@ -66,10 +66,13 @@ class App extends React.Component {
     })
   }
 
-  updateBoatStatus(boatId, newStatus) {
+  updateBoatStatus = (boatId, newStatus) => {
     const mutationString = `mutation { boats { updateBoatStatus(id: ${boatId}, status: ${newStatus}) { id name status }}}`
-    this.axios_instance.post('graphql', {query: mutationString}).then(function(response) {
+    this.axios_instance.post('graphql', {query: mutationString}).then((response) => {
       console.log(response)
+      if (response.status === 200) {
+        this.getBoats()
+      }
     })
   }
 
@@ -147,7 +150,7 @@ class App extends React.Component {
         <Button variant="contained" onClick={() => {this.addBoat(this.state.newBoatName)}}>
           Add Boat
         </Button>
-        <BoatCardList boatCards={this.state.boats} deleteBoat={this.deleteBoat} />
+        <BoatCardList boatCards={this.state.boats} deleteBoat={this.deleteBoat} updateBoat={this.updateBoatStatus} />
         <PageFooter />
       </div>
     );
