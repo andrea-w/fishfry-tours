@@ -1,15 +1,25 @@
 import React from "react";
-import { Button, Card, Paper, Typography } from "@material-ui/core";
+import { Card, CardActions, CardContent, Paper, Typography } from "@material-ui/core";
 import ClearIcon from '@mui/icons-material/Clear';
+import { IconButton } from "@mui/material";
 
 const BoatCard = ({ boatCard }) => {
     return (
         <div className="boat-card-item">
             <Card variant="outlined">
-                {boatCard.name} {boatCard.status}
-                <Button>
+                <CardContent>
+                    <Typography variant="h5">
+                        {boatCard.name}
+                    </Typography>
+                    <Typography color="textSecondary">
+                        {boatCard.status}
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                <IconButton>
                     <ClearIcon />
-                </Button>
+                </IconButton>
+                </CardActions>
             </Card>
         </div>
     )
@@ -22,10 +32,10 @@ const BoatCardList = ({ boatCards }) => {
         )
     }
 
-    const dockedBoats = boatCards.filter((boat) => boat.status.toLowerCase() === 'docked')
-    const maintenanceBoats = boatCards.filter((boat) => boat.status.toLowerCase() === 'maintenance')
-    const outboundBoats = boatCards.filter((boat) => boat.status.toLowerCase().replace("_", " ") === 'outbound to sea')
-    const inboundBoats = boatCards.filter((boat) => boat.status.toLowerCase().replace("_", " ") === 'inbound to harbour')
+    const dockedBoats = boatCards.filter(boat => boat.status.toLowerCase() === 'docked')
+    const maintenanceBoats = boatCards.filter(boat => boat.status.toLowerCase() === 'maintenance')
+    const outboundBoats = boatCards.filter(boat => boat.status.toLowerCase().replace(/_/g, " ") === 'outbound to sea')
+    const inboundBoats = boatCards.filter(boat => boat.status.toLowerCase().replace(/_/g, " ") === 'inbound to harbour')
 
     return (
         <Paper>

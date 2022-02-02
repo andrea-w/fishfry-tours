@@ -8,7 +8,7 @@ export default function PageFooter() {
         <footer>
             <Paper>
                 <Typography>
-                see <a href="/graphql">Graph<em>i</em>QL</a> to interact with the GraphQL endpoint
+                see <a href="http://localhost:5000/graphql">Graph<em>i</em>QL</a> to interact with the GraphQL endpoint
                 </Typography>
             </Paper>
         </footer>

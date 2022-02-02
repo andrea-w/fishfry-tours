@@ -128,7 +128,7 @@ class App extends React.Component {
   
           </Droppable>
         </DragDropContext> */}
-        <Button>
+        <Button variant="contained">
           Add Boat
         </Button>
         <BoatCardList boatCards={this.state.boats} />
